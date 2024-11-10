@@ -29,8 +29,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Long create(BookDTO dto) {
-        Book book = dtoToEntity(dto);
-        return bookRepository.save(book).getId();
+        // return bookRepository.save(dtoToEntity(dto)).getId();
+
+        Book entity = bookRepository.save(dtoToEntity(dto));
+        return entity.getId();
     }
 
     @Override

@@ -32,9 +32,12 @@ public class BookDTO {
     @NotNull(message = "할인 가격을 입력해 주세요")
     private Integer salePrice;
 
+    @NotBlank(message = "카테고리를 입력해 주세요")
     private String categoryName;
 
+    @NotBlank(message = "출판사를 입력해 주세요")
     private String publisherName;
+
     private LocalDateTime createdDateTime;
     private LocalDateTime lastModifDateTime;
 
