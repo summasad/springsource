@@ -38,7 +38,7 @@ public class Member {
     private RoleType roleType;
 
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
