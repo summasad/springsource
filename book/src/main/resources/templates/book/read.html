@@ -3,6 +3,7 @@
   <th:block layout:fragment="css">
     <style></style>
   </th:block>
+
   <div layout:fragment="content" class="container">
     <h1>도서 조회</h1>
     <form action="" method="post">
@@ -102,14 +103,14 @@
         </div>
       </div>
       <div>
-        <a th:href="@{modifiy(id=${dto.id})}" class="btn btn-primary">수정</a>
+        <a th:href="@{modify(id=${dto.id})}" class="btn btn-primary">수정</a>
         <a th:href="@{list}" class="btn btn-secondary">목록</a>
       </div>
     </form>
   </div>
   <th:block layout:fragment="script">
     <script>
-      //스트립트
+      //스크립트 작성
     </script>
   </th:block>
 </html>

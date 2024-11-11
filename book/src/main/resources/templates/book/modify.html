@@ -3,8 +3,9 @@
   <th:block layout:fragment="css">
     <style></style>
   </th:block>
+
   <div layout:fragment="content" class="container">
-    <h1>도서 가격 수정</h1>
+    <h1>도서 수정</h1>
     <form action="" method="post">
       <div class="mb-3 row">
         <label for="categoryName" class="col-sm-2 col-form-label">분류</label>
@@ -83,20 +84,22 @@
             th:value="${dto.salePrice}"
           />
         </div>
-      </div>      
+      </div>
+      <div>
         <button class="btn btn-primary">수정</button>
         <button type="button" class="btn btn-danger">삭제</button>
         <a th:href="@{list}" class="btn btn-secondary">목록</a>
       </div>
     </form>
+
     <form action="" method="post" id="actionForm">
-      <input type="hidden" name="id" th:value="${dto.id}">
+      <input type="hidden" name="id" th:value="${dto.id}" />
     </form>
   </div>
   <th:block layout:fragment="script">
     <script>
-      //스트립트
+      //스크립트 작성
     </script>
-    <script th:src="@{/js/modifiy.js}"></script>
+    <script th:src="@{/js/modify.js}"></script>
   </th:block>
 </html>

@@ -18,7 +18,7 @@ public class MemoRepositoryTest {
 
     @Test
     public void testMempInsert() {
-        IntStream.rangeClosed(1, 10).forEach(i -> {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
             Memo memo = Memo.builder().memoText("memo" + i).build();
             memoRepository.save(memo);
         });
@@ -46,6 +46,16 @@ public class MemoRepositoryTest {
     public void testMemoDelete() {
         // 10번 메모 삭제
         memoRepository.deleteById(40L);
+    }
+
+    // 쿼리 메소드
+    @Test
+    public void testMemoList() {
+        // memoRepository.findByMnoLessThan(35L).forEach(m -> System.out.println(m));
+        // memoRepository.findByMnoLessThanOrderByMnoDesc(45L).forEach(m ->
+        // System.out.println(m));
+        memoRepository.findByMnoBetweenOrderByMnoDesc(50L, 100L)
+                .forEach(m -> System.out.println(m));
     }
 
 }
