@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.example.book.dto.BookDTO;
 import com.example.book.dto.CategoryDTO;
+import com.example.book.dto.PageRequestDto;
+import com.example.book.dto.PageResultDto;
 import com.example.book.dto.PublisherDTO;
 import com.example.book.entity.Book;
 import com.example.book.entity.Category;
@@ -15,7 +17,7 @@ public interface BookService {
 
     BookDTO getRow(Long id);
 
-    List<BookDTO> getList();
+    PageResultDto<BookDTO, Book> getList(PageRequestDto requestDto);
 
     Long update(BookDTO dto);
 

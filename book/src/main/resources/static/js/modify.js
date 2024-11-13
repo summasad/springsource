@@ -7,3 +7,16 @@ document.querySelector(".btn-danger").addEventListener("click", (e) => {
     actionForm.submit();
   }
 });
+
+//목록 클릭시 a 태그 기능 중지
+//actionForm 에서 아이디 요소 제거하기
+//actrionForm method는 get으로 변경
+//actionForm action은 list 변경
+//actionForm submit
+document.querySelector(".btn-secondary").addEventListener("click", (e) => {
+  e.preventDefault;
+  actionForm.querySelector("[name='id]").remove();
+  actionForm.method = "get";
+  actionForm.action = "/book/list";
+  actionForm.submit();
+});

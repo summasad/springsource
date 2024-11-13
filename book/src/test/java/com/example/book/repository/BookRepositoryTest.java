@@ -5,6 +5,10 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.book.entity.Book;
@@ -66,7 +70,7 @@ public class BookRepositoryTest {
         // bookRepository.save(Book.builder().title("소년이온다").writer("한강").price(12000).salePrice(9000)
         // .category(categoryRepository.findById(1L).get())
         // .publisher(publisherRepository.findById(1L).get()).build());
-        IntStream.rangeClosed(1, 9).forEach(i -> {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
             long num = (int) (Math.random() * 5) + 1;
 
             Book book = Book.builder().title("Book title" + i).writer("작가" + i).price(12000).salePrice(9000)
@@ -112,6 +116,35 @@ public class BookRepositoryTest {
     @Test
     public void testDelete() {
         bookRepository.deleteById(10L);
+    }
+
+    // 페이지 나누기
+    @Test
+    public void testPage() {
+        // Pageable : 스프링 부트에서 제공하는 페이지 처리 객체
+
+        // 1page / 20개 최신 도서정보
+        // Pageable pageable = PageRequest.of(0, 0, Direction.DESC);
+        Pageable pageable = PageRequest.of(0, 20, Sort.by("id").descending());
+        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate(null, null), pageable);
+
+        System.out.println("TotalElements " + result.getTotalElements());
+        System.out.println("TotalPages " + result.getTotalPages());
+        result.getContent().forEach(book -> System.out.println(book));
+    }
+
+    @Test
+    public void testSearchPage() {
+        // Pageable : 스프링 부트에서 제공하는 페이지 처리 객체
+
+        // 1page / 20개 최신 도서정보
+        // Pageable pageable = PageRequest.of(0, 0, Direction.DESC);
+        Pageable pageable = PageRequest.of(0, 20, Sort.by("id").descending());
+        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate("c", "건강"), pageable);
+
+        System.out.println("TotalElements " + result.getTotalElements());
+        System.out.println("TotalPages " + result.getTotalPages());
+        result.getContent().forEach(book -> System.out.println(book));
     }
 
 }
