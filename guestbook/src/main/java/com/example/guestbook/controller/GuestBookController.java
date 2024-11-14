@@ -35,7 +35,7 @@ public class GuestBookController {
     }
 
     @GetMapping({ "/read", "/modify" })
-    public void getRow(@RequestParam Long gno, PageRequestDto requestDto, Model model) {
+    public void getRow(@RequestParam Long gno, @ModelAttribute("requestDto") PageRequestDto requestDto, Model model) {
         log.info("상세조회 {}", gno);
         GuestBookDto dto = service.read(gno);
 

@@ -39,7 +39,7 @@ public class GuestBookServiceImpl implements GuestBookService {
 
     @Override
     public PageResultDto<GuestBookDto, GuestBook> list(PageRequestDto requestDto) {
-        Pageable pageable = PageRequest.of(requestDto.getPage(), requestDto.getSize(), Sort.by("gno").descending());
+        Pageable pageable = requestDto.getPageable(Sort.by("gno").descending());
 
         // Predicate predicate(BooleanBuilder 사용), Pageable pageable
         Page<GuestBook> result = guestBookRepository.findAll(

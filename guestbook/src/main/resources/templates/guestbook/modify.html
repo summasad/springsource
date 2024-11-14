@@ -2,7 +2,7 @@
 <html lang="en" layout:decorate="~{/layouts/layout}">
   <div layout:fragment="content">
     <form action="" method="post">
-      <h2>GuestBook Read Page</h2>
+      <h2>GuestBook Modify Page</h2>
       <div class="mb-3">
         <label for="gno">Gno</label>
         <input
@@ -26,14 +26,14 @@
       </div>
       <div class="mb-3">
         <label for="content">Content</label>
-        <input
+        <textarea
           type="text"
           name="content"
           id="content"
           cols="30"
           class="form-control"
           th:text="${dto.content}"
-        />
+        ></textarea>
       </div>
       <div class="mb-3">
         <label for="writer">Writer</label>

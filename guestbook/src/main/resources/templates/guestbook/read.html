@@ -26,15 +26,15 @@
     </div>
     <div class="mb-3">
       <label for="content">Content</label>
-      <input
+      <textarea
         type="text"
         name="content"
         id="content"
         cols="30"
-        readonly
         class="form-control"
+        readonly
         th:text="${dto.content}"
-      />
+      ></textarea>
     </div>
     <div class="mb-3">
       <label for="writer">Writer</label>
@@ -59,7 +59,7 @@
       />
     </div>
     <a
-      th:href="@{modify(gno=${dto.gno},page=${page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
+      th:href="@{modify(gno=${dto.gno},page=${requestDto.page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
       class="btn btn-primary"
       >Modify</a
     >
