@@ -31,16 +31,19 @@ public class GuestBookServiceImpl implements GuestBookService {
 
     @Override
     public GuestBookDto read(Long gno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'read'");
+        // GuestBook result = guestBookRepository.findById(gno).get();
+        // GuestBookDto dto = entityToDto(result);
+        // return dto;
+        return entityToDto(guestBookRepository.findById(gno).get());
     }
 
     @Override
     public PageResultDto<GuestBookDto, GuestBook> list(PageRequestDto requestDto) {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("gno").descending());
+        Pageable pageable = PageRequest.of(requestDto.getPage(), requestDto.getSize(), Sort.by("gno").descending());
 
         // Predicate predicate(BooleanBuilder 사용), Pageable pageable
-        Page<GuestBook> result = guestBookRepository.findAll(guestBookRepository.makePredicate("tc", "Title"),
+        Page<GuestBook> result = guestBookRepository.findAll(
+                guestBookRepository.makePredicate(requestDto.getType(), requestDto.getKeyword()),
                 pageable);
         Function<GuestBook, GuestBookDto> fn = (entity -> entityToDto(entity));
         return new PageResultDto<>(result, fn);
@@ -48,14 +51,16 @@ public class GuestBookServiceImpl implements GuestBookService {
 
     @Override
     public Long update(GuestBookDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        // dto->entity
+        GuestBook entity = guestBookRepository.findById(dto.getGno()).get();
+        entity.setTitle(dto.getTitle());
+        entity.setContent(dto.getContent());
+        return guestBookRepository.save(entity).getGno();
     }
 
     @Override
     public void delete(Long gno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        guestBookRepository.deleteById(gno);
     }
 
 }

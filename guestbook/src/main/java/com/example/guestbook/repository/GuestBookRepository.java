@@ -11,8 +11,8 @@ import com.querydsl.core.types.Predicate;
 public interface GuestBookRepository extends JpaRepository<GuestBook, Long>, QuerydslPredicateExecutor<GuestBook> {
     default Predicate makePredicate(String type, String keyword) {
 
-        BooleanBuilder builder = new BooleanBuilder();
         QGuestBook qGuestBook = QGuestBook.guestBook;
+        BooleanBuilder builder = new BooleanBuilder();
 
         // gno > 0 : range scan
         builder.and(qGuestBook.gno.gt(0L));
