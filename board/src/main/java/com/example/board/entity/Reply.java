@@ -20,7 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "board")
 @Entity
 public class Reply extends BaseEntity {
 

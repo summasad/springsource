@@ -1,10 +1,17 @@
 package com.example.board.repository;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.board.entity.Board;
 import com.example.board.entity.Member;
@@ -34,9 +41,9 @@ public class BoardRepositoryTest {
     @Test
     public void testInsertBoard() {
         // 100개
-        int num = (int) (Math.random() * 30) + 1;
-        Member member = Member.builder().email("abcdef" + num + "@gmail.com").build();
         IntStream.rangeClosed(1, 100).forEach(i -> {
+            int num = (int) (Math.random() * 30) + 1;
+            Member member = Member.builder().email("abcdef" + num + "@gmail.com").build();
             Board board = Board.builder().title("title" + i).content("내용......" + i).writer(member).build();
             boardRepository.save(board);
 
@@ -56,6 +63,66 @@ public class BoardRepositoryTest {
             replyRepository.save(reply);
         });
 
+    }
+
+    @Transactional
+    @Test
+    public void testReadBoard() {
+        Board board = boardRepository.findById(100L).get();
+        System.out.println(board);
+    }
+
+    @Transactional
+    @Test
+    public void testReadReply() {
+        Reply reply = replyRepository.findById(100L).get();
+        System.out.println(reply);
+        System.out.println(reply.getBoard());
+    }
+
+    @Transactional
+    @Test
+    public void testReadBoardReply() {
+        Board board = boardRepository.findById(100L).get();
+        System.out.println(board);
+        System.out.println(board.getReplies());
+    }
+
+    @Transactional
+    @Test
+    public void testJoin() {
+        List<Object[]> result = boardRepository.list();
+        for (Object[] objects : result) {
+            System.out.println(Arrays.toString(objects));
+            // Board board = (Board)objects[0];
+            // Member member = (Member) objects[1];
+            Long replyCnt = (Long) objects[2];
+        }
+    }
+
+    @Test
+    public void testJoinList() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        // Pageable pageable = PageRequest.of(0, 10,
+        // Sort.by("bno").descending().and(Sort.by("title").descending())); 정렬 기준 추가 가능
+        Page<Object[]> result = boardRepository.list("tc", "content", pageable);
+        for (Object[] objects : result) {
+            System.out.println(Arrays.toString(objects));
+
+        }
+    }
+
+    @Test
+    public void testJoinRow() {
+        Object[] object = boardRepository.getBoardByBno(100L);
+        System.out.println(Arrays.toString(object));
+    }
+
+    @Transactional
+    @Test
+    public void replyRemove() {
+        replyRepository.deleteByBno(5L);
+        boardRepository.deleteById(5L);
     }
 
 }
