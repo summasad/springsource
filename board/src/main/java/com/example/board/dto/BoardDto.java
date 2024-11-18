@@ -22,9 +22,11 @@ public class BoardDto {
     private String title;
 
     // private Member writer;
+
     @NotBlank(message = "필수 입력 요소입니다")
-    private String writerEmail;
     @Email(message = "이메일 형식을 확인하세요")
+    private String writerEmail;
+
     private String writerName;
 
     private LocalDateTime regDate;

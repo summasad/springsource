@@ -57,11 +57,12 @@ public class MemoRestController {
     }
 
     // rest 추가되는 method : PUT(or patch) / DELETE
-    @PutMapping("//{mno}")
-    public ResponseEntity<String> postUpdate(@RequestBody MemoDTO dto) {
+    @PutMapping("/{mno}")
+    public ResponseEntity<String> postUpdate(@PathVariable Long mno, @RequestBody MemoDTO dto) {
         log.info("수정 요청 {}", dto);
-        Long mno = memoService.update(dto);
 
+        dto.setMno(mno);
+        memoService.update(dto);
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 

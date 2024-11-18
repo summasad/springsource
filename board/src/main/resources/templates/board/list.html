@@ -3,7 +3,11 @@
   <div layout:fragment="content">
     <h2>
       Board List Page
-      <span><a class="btn btn-outline-primary">REGISTER</a></span>
+      <span
+        ><a class="btn btn-outline-primary" th:href="@{create}"
+          >REGISTER</a
+        ></span
+      >
     </h2>
     <!--검색-->
     <form action="" method="get" id="searchForm">
@@ -40,7 +44,6 @@
           th:value="${requestDto.keyword}"
         />
         <button class="btn btn-outline-secondary">Search</button>
-        <button class="btn btn-outline-secondary">Clear</button>
       </div>
     </form>
     <!--bno, title, writer, regdate-->

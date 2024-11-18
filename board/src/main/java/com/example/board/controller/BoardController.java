@@ -73,7 +73,7 @@ public class BoardController {
     @GetMapping("/create")
     public void getCreate(@ModelAttribute("dto") BoardDto dto,
             @ModelAttribute("requestDto") PageRequestDto requestDto) {
-        log.info("등록폼 요청 {}", dto);
+        log.info("등록폼 요청");
     }
 
     @PostMapping("/create")
@@ -86,7 +86,6 @@ public class BoardController {
         // service
         Long bno = boardService.register(dto);
         rttr.addAttribute("bno", bno);
-        rttr.addAttribute("bno", dto.getBno());
         rttr.addAttribute("page", requestDto.getPage());
         rttr.addAttribute("size", requestDto.getSize());
         rttr.addAttribute("type", requestDto.getType());
