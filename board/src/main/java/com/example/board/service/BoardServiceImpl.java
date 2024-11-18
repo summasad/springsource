@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.board.dto.BoardDto;
 import com.example.board.dto.PageRequestDto;
@@ -28,8 +29,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Long register(BoardDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'register'");
+        return boardRepository.save(dtoToEntity(dto)).getBno();
     }
 
     @Override
@@ -57,9 +57,12 @@ public class BoardServiceImpl implements BoardService {
         // 이 경우 dtoToEntity에 writerEmail이 있기 때문에 modify에 writerEmail정보 삽입
     }
 
+    @Transactional
     @Override
     public void remove(Long bno) {
-        // replyRepository.deleteByBno(bno);
+        // 댓글 삭제
+        replyRepository.deleteByBno(bno);
+        // 원본글 삭제
         boardRepository.deleteById(bno);
     }
 

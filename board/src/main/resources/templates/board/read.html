@@ -3,71 +3,83 @@
   <div layout:fragment="content">
     <h2>Board Read Page</h2>
     <div class="mb-3">
-        <label for="bno">Bno</label>
-        <input
-          type="text"
-          name="bno"
-          id="bno"
-          class="form-control"
-          readonly
-          th:value="${dto.bno}"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          class="form-control"
-          readonly
-          th:value="${dto.title}"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="content">Content</label>
-        <textarea
-          type="text"
-          name="content"
-          id="content"
-          cols="30"
-          class="form-control"
-          readonly
-          th:text="${dto.content}"
-        ></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="writerName">Writer</label>
-        <input
-          type="text"
-          name="writerName"
-          id="writerName"
-          class="form-control"
-          readonly
-          th:value="${dto.writerName}"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="regDate">RegDate</label>
-        <input
-          type="text"
-          name="regDate"
-          id="regDate"
-          class="form-control"
-          th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"
-          readonly
-        />
-      </div>
-      <a
-        th:href="@{modify(bno=${dto.bno},page=${requestDto.page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
-        class="btn btn-primary"
-        >Modify</a
-      >
-      <a
-        th:href="@{list(page=${requestDto.page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
-        class="btn btn-info"
-        >List</a
-      >
+      <label for="bno">Bno</label>
+      <input
+        type="text"
+        name="bno"
+        id="bno"
+        class="form-control"
+        readonly
+        th:value="${dto.bno}"
+      />
     </div>
+    <div class="mb-3">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        class="form-control"
+        readonly
+        th:value="${dto.title}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="content">Content</label>
+      <textarea
+        type="text"
+        name="content"
+        id="content"
+        cols="30"
+        class="form-control"
+        readonly
+        th:text="${dto.content}"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="writerName">Writer</label>
+      <input
+        type="text"
+        name="writerName"
+        id="writerName"
+        class="form-control"
+        readonly
+        th:value="${dto.writerName}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="regDate">RegDate</label>
+      <input
+        type="text"
+        name="regDate"
+        id="regDate"
+        class="form-control"
+        th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"
+        readonly
+      />
+    </div>
+    <a
+      th:href="@{modify(bno=${dto.bno},page=${requestDto.page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
+      class="btn btn-primary"
+      >Modify</a
+    >
+    <a
+      th:href="@{list(page=${requestDto.page},size=${requestDto.size},type=${requestDto.type}, keyword=${requestDto.keyword})}"
+      class="btn btn-info"
+      >List</a
+    >
   </div>
+  <!--댓글 영역-->
+  <div class="row border-bottom">
+    <div class="mt-4">
+      <h5><span></span> 개의 댓글</h5>
+    </div>
+    <div class="list-group reply-list"></div>
+  </div>
+  <th:block layout:fragment="script">
+    <script>
+      const bno = "[[${dto.bno}]]";
+    </script>
+    <script th:src="@{/js/read.js}"></script>
+  </th:block>
 </html>

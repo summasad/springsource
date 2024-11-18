@@ -25,8 +25,7 @@ public class GuestBookServiceImpl implements GuestBookService {
 
     @Override
     public Long register(GuestBookDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'register'");
+        return guestBookRepository.save(dtoToEntity(dto)).getGno();
     }
 
     @Override

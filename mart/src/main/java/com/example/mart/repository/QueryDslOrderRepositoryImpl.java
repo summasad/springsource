@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import com.example.mart.entity.item.Item;
 import com.example.mart.entity.item.Member;
 import com.example.mart.entity.item.Order;
+import com.example.mart.entity.item.QItem;
 import com.example.mart.entity.item.QMember;
 import com.querydsl.jpa.JPQLQuery;
 
@@ -28,7 +29,12 @@ public class QueryDslOrderRepositoryImpl extends QuerydslRepositorySupport imple
 
     @Override
     public List<Item> items() {
-        return null;
+        // select * from item where name='아파트' and price >10000
+        QItem qItem = QItem.item;
+        JPQLQuery<Item> tuple = from(qItem).where(qItem.name.eq("아파트").and(qItem.price.gt(10000))).select(qItem);
+
+        System.out.println("tuple " + tuple);
+        return tuple.fetch();
     }
 
     @Override

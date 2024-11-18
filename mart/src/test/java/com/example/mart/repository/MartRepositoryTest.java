@@ -257,4 +257,10 @@ public class MartRepositoryTest {
 
     }
 
+    @Test
+    public void testMembers() {
+        System.out.println(orderRepository.members());
+
+    }
+
 }

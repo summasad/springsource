@@ -2,6 +2,7 @@ package com.example.guestbook.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.example.guestbook.dto.PageResultDto;
 import com.example.guestbook.entity.GuestBook;
 import com.example.guestbook.service.GuestBookService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +70,28 @@ public class GuestBookController {
         rttr.addAttribute("size", requestDto.getSize());
         rttr.addAttribute("type", requestDto.getType());
         rttr.addAttribute("keyword", requestDto.getKeyword());
+        return "redirect:list";
+    }
+
+    @GetMapping("/register")
+    public void getRegister(@ModelAttribute("dto") GuestBookDto dto) {
+        log.info("guestbook 작성 폼 요청");
+    }
+
+    @PostMapping("/register")
+    public String postRegister(@Valid @ModelAttribute("dto") GuestBookDto dto, BindingResult result,
+            RedirectAttributes rttr) {
+        log.info("guestbook 등록 요청 {}", dto);
+        if (result.hasErrors()) {
+            return "/guestbook/register";
+        }
+        Long gno = service.register(dto);
+        rttr.addFlashAttribute("msg", gno);
+        rttr.addAttribute("page", 1);
+        rttr.addAttribute("size", 20);
+        rttr.addAttribute("type", "");
+        rttr.addAttribute("keyword", "");
+
         return "redirect:list";
     }
 

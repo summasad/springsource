@@ -3,7 +3,11 @@
   <div layout:fragment="content">
     <h2>
       GuestBook List Page
-      <span><a class="btn btn-outline-primary">REGISTER</a></span>
+      <span
+        ><a class="btn btn-outline-primary" th:href="@{register}"
+          >REGISTER</a
+        ></span
+      >
     </h2>
     <!--검색-->
     <form action="" method="get" id="searchForm">
@@ -96,4 +100,12 @@
       </ul>
     </nav>
   </div>
+  <th:block layout:fragment="script">
+    <script>
+      const msg = "[[${msg}]]";
+      if (msg) {
+        alert("정상적으로 처리되었습니다.");
+      }
+    </script>
+  </th:block>
 </html>
