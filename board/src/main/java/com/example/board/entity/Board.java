@@ -25,7 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = { "wirter", "replies" })
+@ToString(exclude = { "writer", "replies" })
 @Entity
 
 public class Board extends BaseEntity {

@@ -17,6 +17,8 @@ const formatDateTime = (str) => {
 
 // 페이지가 로드되면 현재 bno 댓글 가져오기
 
+// 전체 댓글 내용 표시
+const replyList = document.querySelector(".reply-list");
 const replyLoaded = () => {
   fetch(`/replies/board/${bno}`)
     .then((response) => {
@@ -27,11 +29,10 @@ const replyLoaded = () => {
       console.log(data);
       // 전체 댓글 수 표시
       document.querySelector(".d-inline-block").innerHTML = data.length;
-      // 전체 댓글 내용 표시
-      const replyList = document.querySelector(".reply-list");
+
       let result = "";
       data.forEach((reply) => {
-        result += `<div class="d-flex justify-content-between my-2 border-bottom reply-row" data-rno="">`;
+        result += `<div class="d-flex justify-content-between my-2 border-bottom reply-row" data-rno="${reply.rno}">`;
         result += `<div class="p-3"><img src="" alt="" class="rounded-circle mx-auto d-block" /></div>`;
         result += `<div class="flex-grow-1 align-self-center">`;
         result += `<span>${reply.replyer}</span>`;
@@ -48,3 +49,117 @@ const replyLoaded = () => {
 };
 
 replyLoaded();
+
+// 댓글 작성
+// replyForm submit 되면 이벤트 발생
+// submit 중지
+// replyForm 안에 있는 replyer, text value 가져와서 변수에 담기
+const replyForm = document.querySelector("#replyForm");
+replyForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const replyer = replyForm.querySelector("#replyer");
+  const text = replyForm.querySelector("#text");
+  const rno = replyForm.querySelector("#rno");
+
+  // 자바 스크립트 객체로 생성
+  const reply = {
+    text: text.value,
+    replyer: replyer.value,
+    bno: bno,
+    rno: rno.value,
+  };
+
+  // JSON.stringify(객체) => json 변환 함수
+  if (!rno.value) {
+    // 새 댓글
+    fetch(`/replies/new`, {
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(reply),
+      method: "post",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("댓글 삽입 에러 발생");
+        }
+        return response.text();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          // 댓글 폼에 남아있는 내용 제거하기
+          replyer.value = "";
+          text.value = "";
+          // data 번 댓글이 등록되었습니다
+          alert(data + " 번 댓글이 등록되었습니다");
+          replyLoaded();
+        }
+      });
+  } else {
+    // 수정 댓글
+    fetch(`/replies/${rno.value}`, {
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(reply),
+      method: "put",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("댓글 수정 에러 발생");
+        }
+        return response.text();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          // 댓글 폼에 남아있는 내용 제거하기
+          replyer.value = "";
+          text.value = "";
+          rno.value = "";
+          // data 번 댓글이 등록되었습니다
+          alert(data + " 번 댓글이 수정되었습니다");
+          replyLoaded();
+        }
+      });
+  }
+});
+
+// 댓글 수정
+
+// 이벤트 버블링 통해서 이벤트 감지(부모)
+
+// 수정 버튼 클릭시 rno가져오기
+replyList.addEventListener("click", (e) => {
+  // 실제 이벤트 발생 요소 찾아서
+  console.log(e.target);
+  const btn = e.target;
+  //이벤트가 발생한 버튼이 속한 data-rno 를 갖고 있는 부모 태그 찾아오기
+  const rno = btn.closest(".reply-row").dataset.rno;
+  // 수정 or 삭제 버튼 구분
+  // 클래스명 : classList
+  if (btn.classList.contains("btn-outline-danger")) {
+    fetch(`/replies/${rno}`, {
+      method: "delete",
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        console.log(data);
+        alert(data + " 번 댓글이 삭제되었습니다.");
+
+        //댓글영역 새로고침
+        replyLoaded();
+      });
+  } else if (btn.classList.contains("btn-outline-success")) {
+    fetch(`/replies/${rno}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // 수정 버튼이 클릭되면 해당 댓글이 replyForm 안에 보여주기
+        replyForm.querySelector("#rno").value = data.rno;
+        replyForm.querySelector("#replyer").value = data.replyer;
+        replyForm.querySelector("#text").value = data.text;
+      });
+  }
+});
