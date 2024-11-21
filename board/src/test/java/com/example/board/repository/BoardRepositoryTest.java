@@ -11,12 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.board.entity.Board;
 import com.example.board.entity.Member;
 import com.example.board.entity.Reply;
+import com.example.board.entity.constant.MemberRole;
 
 @SpringBootTest
 public class BoardRepositoryTest {
@@ -27,11 +29,15 @@ public class BoardRepositoryTest {
     @Autowired
     private ReplyRepository replyRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     public void testInsertMember() {
         // 30명
         IntStream.rangeClosed(1, 30).forEach(i -> {
-            Member member = Member.builder().email("abcdef" + i + "@gmail.com").name("이름" + i).password("password")
+            Member member = Member.builder().email("abcdef" + i + "@gmail.com").password(passwordEncoder.encode("1111"))
+                    .name("이름" + i).password("password").role(MemberRole.MEMBER)
                     .build();
             memberRepository.save(member);
 
