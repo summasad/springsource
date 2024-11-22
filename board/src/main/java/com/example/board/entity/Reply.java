@@ -30,10 +30,10 @@ public class Reply extends BaseEntity {
     private Long rno;
 
     @Column(nullable = false)
-    private String replyer;
-
-    @Column(nullable = false)
     private String text;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member replyer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;

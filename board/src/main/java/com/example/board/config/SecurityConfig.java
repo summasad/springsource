@@ -22,6 +22,17 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        // static 아래 폴더 경로, 필터 무조건 통과 => 컨트롤러에서 접근 제한 설정
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/img/*", "/js/*", "/css/*", "/assets/*").permitAll()
+                        // .requestMatchers("/board/modify").hasAnyRole("MEMBER", "ADMIN")
+                        .anyRequest().permitAll());
+
+        http.formLogin(login -> login.loginPage("/member/login").permitAll());
+        http.logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessUrl("/"));
         return http.build();
     }
 
@@ -42,4 +53,5 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }

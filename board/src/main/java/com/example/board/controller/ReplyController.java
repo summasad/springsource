@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,8 @@ public class ReplyController {
         return new ResponseEntity<List<ReplyDto>>(replies, HttpStatus.OK);
     }
 
+    // 작성자==로그인사용자
+    @PreAuthorize("authentication.name == #replyDto.replyerEmail")
     @PostMapping("/new")
     public ResponseEntity<Long> postRegister(@RequestBody ReplyDto replyDto) {
         log.info("댓글 작성 {}", replyDto);
@@ -50,6 +53,7 @@ public class ReplyController {
         return new ResponseEntity<>(replyDto, HttpStatus.OK);
     }
 
+    @PreAuthorize("authentication.name == #replyDto.replyerEmail")
     @PutMapping("/{rno}")
     public ResponseEntity<Long> putReply(@PathVariable Long rno, @RequestBody ReplyDto replyDto) {
         log.info("댓글 수정 {}, {}", rno, replyDto);
@@ -58,8 +62,9 @@ public class ReplyController {
         return new ResponseEntity<Long>(rno, HttpStatus.OK);
     }
 
+    @PreAuthorize("authentication.name == #replyDto.replyerEmail")
     @DeleteMapping("/{rno}")
-    public ResponseEntity<Long> deleteReply(@PathVariable Long rno) {
+    public ResponseEntity<Long> deleteReply(@PathVariable Long rno, @RequestBody ReplyDto replyDto) {
         log.info("댓글 삭제 {}", rno);
         replyService.remove(rno);
         return new ResponseEntity<Long>(rno, HttpStatus.OK);

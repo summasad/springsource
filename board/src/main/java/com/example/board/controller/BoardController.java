@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +44,9 @@ public class BoardController {
         model.addAttribute("dto", dto);
     }
 
+    // 로그인 사용자 == 작성자
+
+    @PreAuthorize("authentication.name == #dto.writerEmail")
     @PostMapping("/modify")
     public String postMethodName(BoardDto dto, @ModelAttribute("requestDto") PageRequestDto requestDto,
             RedirectAttributes rttr) {
@@ -57,8 +61,10 @@ public class BoardController {
         return "redirect:read";
     }
 
+    @PreAuthorize("authentication.name == #writerEmail")
     @PostMapping("/remove")
-    public String postRemove(@RequestParam Long bno, @ModelAttribute("requestDto") PageRequestDto requestDto,
+    public String postRemove(@RequestParam Long bno, String writerEmail,
+            @ModelAttribute("requestDto") PageRequestDto requestDto,
             RedirectAttributes rttr) {
         log.info("삭제요청 {}", bno);
         boardService.remove(bno);
@@ -70,12 +76,14 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public void getCreate(@ModelAttribute("dto") BoardDto dto,
             @ModelAttribute("requestDto") PageRequestDto requestDto) {
         log.info("등록폼 요청");
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String postCreate(@Valid @ModelAttribute("dto") BoardDto dto, BindingResult result,
             @ModelAttribute("requestDto") PageRequestDto requestDto, RedirectAttributes rttr) {

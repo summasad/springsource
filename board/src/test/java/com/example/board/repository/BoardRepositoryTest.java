@@ -37,7 +37,7 @@ public class BoardRepositoryTest {
         // 30명
         IntStream.rangeClosed(1, 30).forEach(i -> {
             Member member = Member.builder().email("abcdef" + i + "@gmail.com").password(passwordEncoder.encode("1111"))
-                    .name("이름" + i).password("password").role(MemberRole.MEMBER)
+                    .name("이름" + i).password(passwordEncoder.encode("1111")).role(MemberRole.MEMBER)
                     .build();
             memberRepository.save(member);
 
@@ -63,10 +63,12 @@ public class BoardRepositoryTest {
         // 100개(임의의 bno)
 
         IntStream.rangeClosed(1, 100).forEach(i -> {
-            long bno = (long) (Math.random() * 100) + 1;
+            long bno = (long) (Math.random() * 100) + 204;
+            long mno = (long) (Math.random() * 30) + 1;
             Board board = Board.builder().bno(bno).build();
+            Member member = Member.builder().email("abcdef" + mno + "@gmail.com").build();
 
-            Reply reply = Reply.builder().replyer("guest" + i).text("text....." + i).board(board).build();
+            Reply reply = Reply.builder().replyer(member).text("text....." + i).board(board).build();
             replyRepository.save(reply);
         });
 

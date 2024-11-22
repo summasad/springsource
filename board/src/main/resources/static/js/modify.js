@@ -15,5 +15,6 @@ document.querySelector(".btn-danger").addEventListener("click", () => {
 document.querySelector(".btn-info").addEventListener("click", () => {
   actionForm.method = "get";
   actionForm.querySelector("[name='bno']").remove();
+  actionForm.querySelector("[name='writerEmail']").remove();
   actionForm.submit();
 });
