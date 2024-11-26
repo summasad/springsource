@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.movie.entity.Movie;
 import com.example.movie.entity.MovieImage;
@@ -21,6 +23,9 @@ public class MovieRepositoryTest {
 
     @Autowired
     private MovieImageRepository movieImageRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void testMovieInsert() {
@@ -47,6 +52,25 @@ public class MovieRepositoryTest {
         for (Object[] objects : result) {
             System.out.println(Arrays.toString(objects));
         }
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void testRemove() {
+        Movie movie = Movie.builder().mno(50L).build();
+        movieImageRepository.deleteByMovie(movie);
+        reviewRepository.deleteByMovie(movie);
+        movieRepository.delete(movie);
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void testRemove2() {
+        Movie movie = movieRepository.findById(51L).get();
+
+        movieRepository.delete(movie);
     }
 
 }
