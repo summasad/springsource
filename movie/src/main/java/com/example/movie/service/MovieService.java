@@ -1,7 +1,10 @@
 package com.example.movie.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.example.movie.dto.MovieDto;
@@ -49,9 +52,39 @@ public interface MovieService {
     };
 
     default Map<String, Object> dtoToEntituy(MovieDto movieDto) {
+        Map<String, Object> resultMap = new HashMap<>();
         Movie movie = Movie.builder().mno(movieDto.getMno()).title(movieDto.getTitle())
                 .build();
-        return null;
-    };
+        resultMap.put("movie", movie);
+
+        // MovieImageDto => MovieImage 변경후 MovieImage List 형태로 리턴
+        // List<MovieImageDto> movieImageDtos = movieDto.getMovieImageDtos();
+        // List<MovieImage> movieImages = new ArrayList<>();
+        // if (movieImageDtos != null && movieImageDtos.size() > 0) {
+        // movieImageDtos.forEach(dto -> {
+        // MovieImage movieImage = MovieImage.builder()
+        // .uuid(dto.getUuid())
+        // .imgName(dto.getImgName())
+        // .path(dto.getPath())
+        // .movie(movie)
+        // .build();
+        // movieImages.add(movieImage);
+        // });
+        // }
+        List<MovieImageDto> movieImageDtos = movieDto.getMovieImageDtos();
+        if (movieImageDtos != null && movieImageDtos.size() > 0) {
+            List<MovieImage> movieImages = movieImageDtos.stream().map(dto -> {
+                MovieImage movieImage = MovieImage.builder()
+                        .uuid(dto.getUuid())
+                        .imgName(dto.getImgName())
+                        .path(dto.getPath())
+                        .movie(movie)
+                        .build();
+                return movieImage;
+            }).collect(Collectors.toList());
+            resultMap.put("movieImages", movieImages);
+        }
+        return resultMap;
+    }
 
 }
