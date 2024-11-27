@@ -30,21 +30,21 @@ public interface MovieService {
     // 영화 상세 조회
     MovieDto get(Long mno);
 
-    default MovieDto entityToDto(Movie movie, List<MovieImage> movieImage, Long reviewCnt, Double reviewAvg) {
+    default MovieDto entityToDto(Movie movie, List<MovieImage> movieImages, Long reviewCnt, Double reviewAvg) {
         // movie=> movieDto
-        // MovieImage => MovieImageDto 변경후 리스트 작업
+        // movieImages => MovieImageDto 변경후 리스트 작업
 
         MovieDto movieDto = MovieDto.builder()
                 .mno(movie.getMno()).title(movie.getTitle())
-                // .movieImageDtos(movieImage)
+                // .movieImageDtos(movieImages)
                 .reviewCnt(reviewCnt).reviewAvg(reviewAvg != null ? reviewAvg : 0.0d)
                 .regDate(movie.getRegDate())
                 .updateDate(movie.getUpdateDate())
                 .build();
 
-        List<MovieImageDto> movieImageDtos = movieImage.stream().map(mi -> {
-            return MovieImageDto.builder().inum(mi.getInum()).uuid(mi.getUuid())
-                    .imgName(mi.getImgName()).path(mi.getPath()).build();
+        List<MovieImageDto> movieImageDtos = movieImages.stream().map(movieImage -> {
+            return MovieImageDto.builder().inum(movieImage.getInum()).uuid(movieImage.getUuid())
+                    .imgName(movieImage.getImgName()).path(movieImage.getPath()).build();
         }).collect(Collectors.toList());
         movieDto.setMovieImageDtos(movieImageDtos);
         return movieDto;

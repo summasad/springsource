@@ -7,8 +7,8 @@ function showUploadImages(files) {
   let tags = "";
   files.forEach((file) => {
     tags += `<li data-name="${file.fileName}" data-path="${file.folderPath}" data-uuid="${file.uuid}"><div><a href="">`;
-    tags += `<img src="/upload/display?fileName=${file.thumbImageURL}" alt="" class="block" /></a>`;
-    tags += `<span class="text-sm d-inline-block mx-1">${file.fileNames}</span>`;
+    tags += `<img src="/upload/display?fileName=${file.thumbImageURL}" class="block" /></a>`;
+    tags += `<span class="text-sm d-inline-block mx-1">${file.fileName}</span>`;
     tags += `<a href="${file.imageURL}" data-file=""><i class="fa-solid fa-xmark"></i></a>`;
     tags += `</div></li>`;
   });
@@ -50,7 +50,7 @@ document.querySelector("#createForm").addEventListener("submit", (e) => {
     console.log(obj.dataset.uuid);
     result += `<input type="hidden" name="movieImageDtos[${idx}].path" value="${obj.dataset.path}">`;
     result += `<input type="hidden" name="movieImageDtos[${idx}].uuid" value="${obj.dataset.uuid}">`;
-    result += `<input type="hidden" name="movieImageDtos[${idx}].imageName" value="${obj.dataset.name}">`;
+    result += `<input type="hidden" name="movieImageDtos[${idx}].imgName" value="${obj.dataset.name}">`;
   });
   e.target.insertAdjacentHTML("beforeend", result);
   //폼 내용 확인
