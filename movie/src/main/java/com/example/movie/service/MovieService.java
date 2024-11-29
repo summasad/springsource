@@ -51,7 +51,7 @@ public interface MovieService {
 
     };
 
-    default Map<String, Object> dtoToEntituy(MovieDto movieDto) {
+    default Map<String, Object> dtoToEntity(MovieDto movieDto) {
         Map<String, Object> resultMap = new HashMap<>();
         Movie movie = Movie.builder().mno(movieDto.getMno()).title(movieDto.getTitle())
                 .build();
