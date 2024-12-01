@@ -30,7 +30,7 @@
     ></script>
     <script th:src="@{/assets/js/charts-lines.js}" defer></script>
     <script th:src="@{/assets/js/charts-pie.js}" defer></script>
-    <!-- font-awesome  -->
+    <!--font-awesome-->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
@@ -38,7 +38,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <!-- 페이지 별 css 영역 -->
+    <!--페이지별 css 영역-->
     <th:block layout:fragment="css"></th:block>
   </head>
   <body>
@@ -50,10 +50,11 @@
       <div th:replace="~{/fragments/sidebar::sidebar}"></div>
 
       <div class="flex flex-col flex-1 w-full">
-        <!-- header -->
+        <!-- Header-->
         <div th:replace="~{/fragments/header::header}"></div>
+
         <main class="h-full overflow-y-auto">
-          <!-- content -->
+          <!-- Page content-->
           <div layout:fragment="content"></div>
         </main>
       </div>
@@ -65,7 +66,7 @@
       <input type="hidden" name="type" th:value="t" />
       <input type="hidden" name="keyword" th:value="${requestDto.keyword}" />
     </form>
-    <!-- 모달창 -->
+    <!--모달창-->
     <div
       class="modal fade"
       id="imgModal"

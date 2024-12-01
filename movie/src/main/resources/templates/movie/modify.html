@@ -69,7 +69,7 @@
         <ul>
           <li
             th:each="movieImage : ${movieDto.movieImageDtos}"             
-            th:attr="data-name=${movieImage.getImgName()}, data-path=${movieImage.getPath()},data-uuid=${movieImage.getUuid()}"                                         
+            th:attr="data-name=${movieImage.getImgName()}, data-path=${movieImage.getPath()}, data-uuid=${movieImage.getUuid()}"                                         
           >
             <img
               data-bs-toggle="modal" data-bs-target="#imgModal"
@@ -104,8 +104,8 @@
       // 영화명 
       const title = '[[${movieDto.title}]]';      
     </script>
-    <script th:src="@{/js/modify.js}"></script>
     <script th:src="@{/js/read.js}"></script>
+    <script th:src="@{/js/modify.js}"></script>
     <script th:src="@{/js/upload.js}"></script>
   </th:block>
 </html>

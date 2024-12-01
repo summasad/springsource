@@ -97,22 +97,19 @@ public class UploadController {
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName, String size) {
         ResponseEntity<byte[]> result = null;
-
         try {
-            // "2024%2F11%2F27%5C7e9547c0-ba45-463b-a4ae-59a35d92962a_seoul1.jpg"
             String srcFileName = URLDecoder.decode(fileName, "utf-8");
-            // upload/2024/11/27/s_C7e9547c0-ba45-463b-a4ae-59a35d92962a_seoul1.jpg
             File file = new File(uploadPath + File.separator + srcFileName);
 
             if (size != null && size.equals("1")) {
-                // upload/2024/11/27/, 원본파일명
                 file = new File(file.getParent(), file.getName().substring(2));
+                // 부모 폴더,"s_" 떼고 원본파일 불러오기
             }
 
             HttpHeaders headers = new HttpHeaders();
-            // Content-Type : image/png or text/html
             headers.add("Content-Type", Files.probeContentType(file.toPath()));
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
+
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

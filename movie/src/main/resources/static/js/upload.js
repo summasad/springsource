@@ -4,16 +4,13 @@ const fileInput = document.querySelector("[type='file']");
 function showUploadImages(files) {
   // 이미지 보여줄 영역 찾아오기
   const output = document.querySelector(".uploadResult ul");
-
   let tags = "";
   files.forEach((file) => {
-    tags += `<li data-name="${file.fileName}" data-path="${file.folderPath}" data-uuid="${file.uuid}">`;
-    tags += `<div>`;
-    tags += `<a href=""><img src="/upload/display?fileName=${file.thumbImageURL}" class="block"></a>`;
+    tags += `<li data-name="${file.fileName}" data-path="${file.folderPath}" data-uuid="${file.uuid}"><div><a href="">`;
+    tags += `<img src="/upload/display?fileName=${file.thumbImageURL}" class="block" /></a>`;
     tags += `<span class="text-sm d-inline-block mx-1">${file.fileName}</span>`;
     tags += `<a href="${file.imageURL}" data-file=""><i class="fa-solid fa-xmark"></i></a>`;
-    tags += `</div>`;
-    tags += `</li>`;
+    tags += `</div></li>`;
   });
   output.insertAdjacentHTML("beforeend", tags);
 }

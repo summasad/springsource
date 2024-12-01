@@ -99,7 +99,7 @@ public class MovieServiceImpl implements MovieService {
 
         Movie movie = (Movie) result.get(0)[0];
         Long reviewCnt = (Long) result.get(0)[2];
-        Double avg = (Double) result.get(0)[3];
+        Double reviewAvg = (Double) result.get(0)[3];
 
         // 1 : 영화이미지
         List<MovieImage> movieImages = new ArrayList<>();
@@ -108,7 +108,7 @@ public class MovieServiceImpl implements MovieService {
             movieImages.add(movieImage);
         });
 
-        return entityToDto(movie, movieImages, reviewCnt, avg);
+        return entityToDto(movie, movieImages, reviewCnt, reviewAvg);
     }
 
 }

@@ -50,23 +50,21 @@
           </a>
         </div>
       </form>
-      <!-- 영화이미지 영역 -->
-      <div class="uploadResult mb-4">
-        <ul>
-          <li th:each="movieImage : ${movieDto.movieImageDtos}">
-            <img
-              th:attr="data-file=${movieImage.getThumbImageURL()}" data-bs-toggle="modal" data-bs-target="#imgModal"
-              th:src="|/upload/display?fileName=${movieImage.getThumbImageURL()}|"
-              th:if="${movieImage.path != null}"
-              alt=""
-              class="block"
-            />
-          </li>
-        </ul>
-      </div>
-
-      <div>        
-          <a
+    <!--영화 이미지 영역-->
+    <div class="uploadResult mb-4">
+      <ul>
+        <li th:each="movieImage : ${movieDto.movieImageDtos}">
+          <img 
+          th:attr="data-file=${movieImage.getThumbImageURL()}" data-bs-toggle="modal" data-bs-target="#imgModal"
+          th:src="|/upload/display?fileName=${movieImage.getThumbImageURL()}|"
+          th:if="${movieImage.path != null}"
+          alt="" 
+          class="block" />
+        </li>
+      </ul>
+    </div>
+    <div>  
+        <a
           class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
           href="https://github.com/estevanmaito/windmill-dashboard"
         >
@@ -141,15 +139,13 @@
     <script th:src="@{/assets/js/starrr.js}"></script>
     <script>
       // 영화명 
-      const title = '[[${movieDto.title}]]';
-      const mno = '[[${movieDto.mno}]]';
-      
-      let grade = 0;
+      const title='[[${movieDto.title}]]';
+      let grade=0;
       $('.starrr').starrr({
         rating:grade,
         change: function(e, value){
-          console.log('new rating is ' + value);
-          grade = value;
+          console.log('new rating is ' + value)
+          grade=value;
         }
       })
     </script>
