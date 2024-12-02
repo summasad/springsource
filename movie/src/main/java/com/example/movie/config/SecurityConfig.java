@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableMethodSecurity
 @EnableWebSecurity
@@ -19,17 +20,20 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 모든 접근 허용
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        // http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
 
-        // http.authorizeHttpRequests(authorize -> authorize
-        // .requestMatchers("/", "/assets/**", "/css/**", "/js/**",
-        // "/upload/**").permitAll()
-        // .requestMatchers("/movie/list").permitAll()
-        // .anyRequest().authenticated());
-        // http.formLogin(login -> login.loginPage("/member/login").permitAll());
-        // http.sessionManagement(session ->
-        // session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
-        http.csrf(csrf -> csrf.disable());
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/assets/**", "/css/**", "/js/**",
+                        "/upload/**")
+                .permitAll()
+                .requestMatchers("/movie/list").permitAll()
+                .anyRequest().authenticated());
+        http.formLogin(login -> login.loginPage("/member/login").permitAll().defaultSuccessUrl("/movie/list"));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+        http.logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessUrl("/"));
+        // http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 

@@ -5,7 +5,9 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.movie.entity.Member;
 import com.example.movie.entity.constant.MemberRole;
@@ -26,5 +28,19 @@ public class MemberRepositoryTest {
 
             memberRepository.save(member);
         });
+    }
+
+    @Test
+    public void testUpdate() {
+        Member member = memberRepository.findById(2L).get();
+        member.setNickname("coffee");
+        memberRepository.save(member);
+    }
+
+    @Transactional
+    @Test
+    public void testUpdate2() {
+        memberRepository.updateNickName("greentea", "user1@gmail.com");
+
     }
 }
