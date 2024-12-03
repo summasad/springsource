@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import com.example.movie.entity.Member;
 import com.example.movie.entity.Movie;
 import com.example.movie.entity.Review;
 import com.example.movie.repository.total.MovieImageReviewRepository;
@@ -22,4 +23,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, MovieImag
     // movie_mno 를 이용해 리뷰 가져오기
     @EntityGraph(attributePaths = "member", type = EntityGraphType.FETCH)
     List<Review> findByMovie(Movie movie);
+
+    @Modifying
+    @Query("DELETE FROM Review r WHERE r.member = :member")
+    void deleteByMember(Member member);
 }

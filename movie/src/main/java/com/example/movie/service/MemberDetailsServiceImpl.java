@@ -14,6 +14,7 @@ import com.example.movie.dto.MemberDto;
 import com.example.movie.dto.PasswordDto;
 import com.example.movie.entity.Member;
 import com.example.movie.repository.MemberRepository;
+import com.example.movie.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +25,7 @@ import lombok.extern.log4j.Log4j2;
 public class MemberDetailsServiceImpl implements UserDetailsService, MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,6 +68,30 @@ public class MemberDetailsServiceImpl implements UserDetailsService, MemberServi
             member.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
             memberRepository.save(member);
         }
+
+    }
+
+    @Transactional
+    @Override
+    public void leave(PasswordDto passwordDto) throws Exception {
+        Member member = memberRepository.findByEmail(passwordDto.getEmail()).get();
+
+        if (!passwordEncoder.matches(passwordDto.getCurrentPassword(), member.getPassword())) {
+            throw new Exception("현재 비밀번호를 확인");
+        }
+
+        // 리뷰 삭제(작성자 이용해서)
+        reviewRepository.deleteByMember(member);
+        // 회원 삭제
+        memberRepository.deleteById(member.getMid());
+    }
+
+    @Override
+    public String register(MemberDto memberDto) {
+        Member member = dtoToEntity(memberDto);
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
+        return memberRepository.save(member).getNickname();
 
     }
 

@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/assets/**", "/css/**", "/js/**",
                         "/upload/**")
                 .permitAll()
-                .requestMatchers("/movie/list").permitAll()
+                .requestMatchers("/movie/list", "/member/register").permitAll()
                 .anyRequest().authenticated());
         http.formLogin(login -> login.loginPage("/member/login").permitAll().defaultSuccessUrl("/movie/list"));
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
