@@ -24,13 +24,13 @@ public class MemberRepositoryTest {
 
     @Test
     public void testMemberInsert() {
-        IntStream.rangeClosed(1, 50).forEach(m -> {
-            Member member = Member.builder().email("user" + m + "@gmail.com").password(passwordEncoder.encode("1111"))
-                    .nickname("nick" + m).role(MemberRole.MEMBER)
-                    .build();
+        // IntStream.rangeClosed(1, 50).forEach(m -> {
+        Member member = Member.builder().email("admin@gmail.com").password(passwordEncoder.encode("1111"))
+                .nickname("admin").role(MemberRole.ADMIN)
+                .build();
 
-            memberRepository.save(member);
-        });
+        memberRepository.save(member);
+        // });
     }
 
     @Test
