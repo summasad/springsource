@@ -15,7 +15,7 @@ import jakarta.persistence.Id;
 @Setter
 @Entity
 public class DMember {
-
+    // 회원 더미 클래스
     @Id
     Long memberId;
 

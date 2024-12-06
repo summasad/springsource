@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.mybatis.dto.BookDTO;
 import com.example.mybatis.dto.CategoryDTO;
 import com.example.mybatis.dto.PageRequestDto;
+import com.example.mybatis.dto.PageResultDto;
 import com.example.mybatis.dto.PublisherDTO;
 import com.example.mybatis.service.BookService;
 import jakarta.validation.Valid;
@@ -34,11 +35,14 @@ public class BookController {
     @GetMapping("/list")
     public void getList(@ModelAttribute("requestDto") PageRequestDto requestDto,
             Model model) {
+        log.info("도서 전체 목록 요청 {}", requestDto);
         List<BookDTO> result = bookService.getList(requestDto);
         int total = bookService.getTotalCnt(requestDto);
 
         log.info("list {}", result);
         log.info("total {}", total);
+        model.addAttribute("result", new PageResultDto<>(requestDto, total, result));
+
     }
 
     // 상세조회
@@ -56,16 +60,17 @@ public class BookController {
             RedirectAttributes rttr) {
         log.info("도서 수정 요청 {}", dto);
         log.info("requestDto {}", requestDto);
-
-        Long id = bookService.update(dto);
-
-        // 상세조회로 이동
-        rttr.addAttribute("id", id); // ?id=3
-        rttr.addAttribute("page", requestDto.getPage());
-        rttr.addAttribute("size", requestDto.getSize());
-        rttr.addAttribute("type", requestDto.getType());
-        rttr.addAttribute("keyword", requestDto.getKeyword());
-        return "redirect:read";
+        if (bookService.update(dto)) {
+            // 상세조회로 이동
+            rttr.addAttribute("id", dto.getId()); // ?id=3
+            rttr.addAttribute("page", requestDto.getPage());
+            rttr.addAttribute("size", requestDto.getSize());
+            rttr.addAttribute("type", requestDto.getType());
+            rttr.addAttribute("keyword", requestDto.getKeyword());
+            return "redirect:read";
+        } else {
+            return "/book/modify";
+        }
     }
 
     @PostMapping("/remove")
@@ -95,7 +100,7 @@ public class BookController {
 
     @PostMapping("/create")
     public String postCreate(@Valid @ModelAttribute("dto") BookDTO dto, BindingResult result, Model model,
-            RedirectAttributes rttr) {
+            RedirectAttributes rttr, @ModelAttribute("requestDto") PageRequestDto requestDto) {
         log.info("도서 입력 요청 {}", dto);
 
         List<CategoryDTO> categories = bookService.getCateList();
@@ -109,9 +114,13 @@ public class BookController {
         }
 
         // 서비스 insert 호출
-        Long id = bookService.create(dto);
+        bookService.create(dto);
 
-        rttr.addFlashAttribute("msg", id + "번 도서가 등록되었습니다.");
+        rttr.addFlashAttribute("msg", "도서가 등록되었습니다.");
+        rttr.addAttribute("page", 1);
+        rttr.addAttribute("size", requestDto.getSize());
+        rttr.addAttribute("type", requestDto.getType());
+        rttr.addAttribute("keyword", requestDto.getKeyword());
         return "redirect:list";
     }
 

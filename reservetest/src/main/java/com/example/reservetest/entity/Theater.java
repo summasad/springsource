@@ -21,14 +21,14 @@ public class Theater {
     @SequenceGenerator(name = "theater_seq_gen", sequenceName = "theater_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theater_seq_gen")
     @Id
-    private Long theaterNo;
+    private Long theaterNo; // 상영관번호
 
-    private String theaterName;
+    private String theaterName; // 극장 이름
 
-    private String theaterCate;
+    private String theaterCate; // 상영관 종류
 
-    private String showtimes;
+    private String showtimes; // 상영 시간
 
-    private String seat;
+    private String seat; // 좌석
 
 }

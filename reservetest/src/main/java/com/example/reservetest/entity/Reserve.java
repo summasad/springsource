@@ -24,29 +24,29 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = { "theaterNo", "dMember", "dMovie", "guest" })
+@ToString(exclude = { "theater", "dMember", "dMovie", "guest" })
 @Entity
 public class Reserve extends BaseEntity {
     @SequenceGenerator(name = "reserve_seq_gen", sequenceName = "reserve_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reserve_seq_gen")
     @Id
-    private Long reserveNo;
+    private Long reserveNo; // 예매번호
 
-    private Long price;
+    private Long price; // 영화금액
 
     @Enumerated(EnumType.STRING)
-    private ReserveStatus status;
+    private ReserveStatus status; // 예매상태
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Theater theaterNo;
+    private Theater theater; // 상영관 정보
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private DMember dMember;
+    private DMember dMember; // 회원 정보
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private DMovie dMovie;
+    private DMovie dMovie; // 영화 정보
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reserve")
-    private Guest guest;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Guest guest; // 비회원 예매
 
 }

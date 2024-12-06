@@ -19,14 +19,20 @@ import lombok.Setter;
 @ToString(excludes = "reserve")
 @Entity
 public class Guest extends BaseEntity {
-    @Id
-    private Long guestNo;
-    private String password;
-    private String guestName;
-    private String guestPhone;
-    private String guestBirth;
 
-    @OneToOne
-    private Reserve reserve;
+    @Id
+
+    private Long guestNo; // 비회원번호
+
+    private String password; // 비밀번호
+
+    private String guestName; // 비회원이름
+
+    private String guestPhone; // 비회원 전화번호
+
+    private String guestBirth; // 비회원 생년월일
+
+    @OneToOne(mappedBy = "guest")
+    private Reserve reserve; // 예매
 
 }

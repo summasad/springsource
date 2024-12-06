@@ -15,6 +15,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class DMovie {
+    // 영화 더미 클래스
     @Id
     private Long movieNo;
     private String title;
