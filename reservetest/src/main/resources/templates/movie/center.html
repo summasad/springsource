@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{/layouts/layout}">
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/reservation.css}">
+    </th:block>
+   
+    <div layout:fragment="content">
+      <table>
+        <tr>
+          <td>
+        <h3 class="color_white">고객센터</h3>
+        <div class="card" style="width: 18rem;">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item active">자주찾는 질문</li>
+            <a href="#" class="list-group-item list-group-item-action">공지/뉴스</a>
+            <a href="#" class="list-group-item list-group-item-action">이메일 문의</a>
+            <a href="#" class="list-group-item list-group-item-action">단체/대관 문의</a>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+          </div>
+        </div>
+      </td>
+          <td>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">AI상담톡 이용</h5>
+                <p class="card-text">AI상담톡을 이용해보세요.</p>
+                <a href="#" class="btn btn-primary">문의하기</a>
+              </div>
+            </div>
+      </td>
+          <td>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">이메일 문의</h5>
+                <p class="card-text">언제든지 문의해주세요.</p>
+                <a href="#" class="btn btn-primary">문의하기</a>
+              </div>
+            </div>
+      </td>
+          <td>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">내 상담 내역 확인</h5>
+                <p class="card-text">문의하신 내역을 확인 가능합니다.</p>
+                <a href="#" class="btn btn-primary">문의하기</a>
+              </div>
+            </div>
+      </td>
+      
+      </tr>
+      </table>
+    <th:block layout:fragment="js"></th:block>
+   
+</html>

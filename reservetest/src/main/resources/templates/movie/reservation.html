@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{/layouts/layout}">
+  <th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/reservation.css}">
+  </th:block>   
+    <div layout:fragment="content">      
+      <h3 class="color_white">예매</h3>
+      <table class="table">
+        <tr>
+          <th scope="col">날짜</th>            
+        </tr>
+      </table>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>영화</th>
+            <th>극장</th>
+            <th>시간</th>
+          </tr>
+        </tbody>
+        <div >
+          <tr>
+            <td>
+              <ul class="list-group list-group-flush">
+                <a  href="#" class="list-group-item list-group-item-action">
+                  <li> 영화 리스트</li>
+                </a>                        
+              </ul>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-4">
+                  <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">                       
+                    <li class="nav-link" th:href="@{#item-1}">전체</li>
+                    <nav class="nav nav-pills flex-column">
+                      <a class="nav-link" th:href="@{#item-1-1}">극장리스트</a>                          
+                    </nav>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
+                    <div id="item-1-1">
+                      <h4></h4>
+                        <p>.</p>
+                    </div>
+                  </div>
+                </div> 
+              </div>      
+            </td>
+            <td>
+              <ul class="nav justify-content-center">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">날짜요일</a>
+                </li>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <div>
+                      <span>상영시간</span>
+                      <span>영화타이틀</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </td>                
+          </tr>
+        </div>
+        <div id="ticket_tnb" class="tnb_container ">
+          <div class="tnb step1">
+            <!-- btn-left -->
+            <a class="btn-left" href="#" onclick="OnTnbLeftClick(); return false;" title="영화선택">이전단계로 이동</a>
+            <div class="info movie">
+              <span class="movie_poster"><img src="http://img.cgv.co.kr/Movie/Thumbnail/Poster/000077/77372/77372_185.JPG" alt="영화 포스터" style="display: inline;"></span>
+              <div class="row movie_title colspan2" style="display: block;">
+                <span class="data letter-spacing-min ellipsis-line2"><a href="http://www.cgv.co.kr/movies/detail-view/?midx=77372" target="_blank" onmousedown="javascript:logClick('SUMMARY/영화상세보기');" title="인터스텔라">인터스텔라</a></span>
+              </div>
+              <div class="row movie_type" style="display: block;">
+                <span class="data ellipsis-line1" title="IMAX LASER 2D(마스터피스 기획전)">IMAX LASER 2D(마스터피스 기획전)</span>
+              </div>
+              <div class="placeholder" title="영화선택" style="display: none;"></div>
+            </div>
+            <div class="info theater">
+              <div class="row name" style="display: block;">
+                <span class="header">극장</span>
+                <span class="data letter-spacing-min ellipsis-line1"><a target="_blank" onmousedown="javascript:logClick('SUMMARY/극장상세보기');" href="http://www.cgv.co.kr/theaters/?theaterCode=0013" title="CGV 용산아이파크몰">CGV 용산아이파크몰 &gt; </a></span>
+              </div>
+              <div class="row date" style="display: block;">
+                <span class="header">일시</span>
+                <span class="data" title="2024.12.12(목) 09:30">2024.12.12(목) 09:30</span>
+              </div>
+              <div class="row screen" style="display: block;">
+                <span class="header">상영관</span>
+                <span class="data" title="IMAX관">IMAX관</span>
+              </div>
+              <div class="placeholder" title="극장선택" style="display: none;"></div>
+            </div>
+            <div class="info seat">
+              <div class="row seat_name" style="height: 0px;">
+                <span class="header">좌석명</span>
+                <span class="data" title=""></span>
+              </div>
+              <div class="row seat_no colspan3">
+                <span class="header">좌석번호</span>
+                <span class="data ellipsis-line3" title=""></span>
+              </div>
+              <div class="placeholder" title="좌석선택" style="display: block;"></div>
+            </div>
+            <div class="info payment-ticket" style="width: 155px;">
+              <div class="row payment-millitary" style="display: none;">
+                <span class="header">군인</span>
+                <span class="data"><span class="price">0</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">0</span></span>
+              </div>
+              <div class="row payment-adult" style="display: none;">
+                <span class="header">일반</span>
+                <span class="data"><span class="price">12,000</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">1</span></span>
+              </div>
+              <div class="row payment-youth" style="display: none;">
+                <span class="header">청소년</span>
+                <span class="data"><span class="price">0</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">0</span></span>
+              </div>
+              <div class="row payment-child" style="display: none;">
+                <span class="header">어린이</span>
+                <span class="data"><span class="price">0</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">0</span></span>
+              </div>						
+              <div class="row payment-senior" style="display: none;">
+                <span class="header">경로</span>
+                <span class="data"><span class="price">0</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">0</span></span>
+              </div>
+              <div class="row payment-special" style="display: none;">
+                <span class="header">우대</span>
+                <span class="data"><span class="price">0</span><span class="exe"> 원 X </span><span class="quantity" style="display: none;">0</span></span>
+              </div>
+              <div class="row payment-final" style="display: none;">
+                <span class="header">총금액</span>
+                <span class="data"><span class="price">12,000</span><span class="won">원</span></span>
+              <span id="priceMapInfoIco" style="position: absolute; right: -17px; margin-top: 3px; cursor: pointer; display: none;"><img src="http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/step2/ico_circle_14.png" height="14" width="14" alt="mappingIco"></span><div id="priceMappingContainer" style="display: none; position: absolute; right: -80px; z-index: 100; width: 155px; height: auto; padding: 10px; background: rgb(51, 51, 51); bottom: 115px;"><span class="typeNm" style="display:inline-block; width:60px;">일반</span> : LIGHT X 1<br></div></div>
+            </div>
+            <div class="info path">
+              <div class="row colspan4">
+                <span class="path-step2" title="좌석선택">&nbsp;</span>
+                <span class="path-step3" title="결제">&nbsp;</span>
+              </div>
+            </div>
+            <!-- btn-right -->
+            <div class="tnb_step_btn_right_before" id="tnb_step_btn_right_before"></div>
+            <a class="btn-right on" id="tnb_step_btn_right" href="#" onclick="OnTnbRightClick(); return false;" title="좌석선택"></a>
+          </div>
+        </div>
+      </table>        
+    <th:block layout:fragment="js"></th:block>   
+</html>

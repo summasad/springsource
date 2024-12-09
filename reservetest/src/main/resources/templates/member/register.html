@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{/layouts/layout}">
+  <div layout:fragment="content">  
+
+<section class="signup spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <h3>회원가입</h3>
+                    <form action="#">
+                        <div class="input__item">
+                            <input type="text" placeholder="아이디">
+                            <span class="icon_profile"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="password" placeholder="비밀번호">
+                            <span class="icon_lock"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="password" placeholder="비밀번호 재입력">
+                            <span class="icon_lock"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="email" placeholder="이메일">
+                            <span class="icon_mail"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="이름">
+                            <span class="icon_profile"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="성별">
+                            <span class="icon_profile"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="생년월일">
+                            <span class="icon_profile"></span>
+                        </div>
+                        <button type="submit" class="site-btn">가입하기</button>
+                    </form>
+                    <h5>이미 회원이신가요?<a th:href="@{/member/login}">로그인하기</a></h5>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__social__links">
+                    <h3>Login With:</h3>
+                    <ul>
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i> Sign in With Facebook</a>
+                        </li>
+                        <li><a href="#" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i> Sign in With Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</html>

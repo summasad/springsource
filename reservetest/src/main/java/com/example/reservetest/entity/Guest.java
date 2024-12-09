@@ -21,7 +21,6 @@ import lombok.Setter;
 public class Guest extends BaseEntity {
 
     @Id
-
     private Long guestNo; // 비회원번호
 
     private String password; // 비밀번호
